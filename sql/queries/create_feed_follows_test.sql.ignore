@@ -1,0 +1,26 @@
+-- name: CreateFeedFollow :one
+with inserted_feed_follow as (
+        INSERT INTO feed_follows (
+            id, 
+            created_at, 
+            updated_at, 
+            users_id,
+            feeds_id
+        )
+    VALUES (
+        gen_random_uuid(),
+        now(),
+        now(),
+        'a14d294a-41d7-4a72-860b-37d1bad10819',
+        '57628440-3b5a-46ba-9ba2-5c00fa2484bb'
+    )
+    returning *
+)
+select 
+    inserted_feed_follow.*, 
+    feeds.name as feed_name,
+    users.name as user_name
+from inserted_feed_follow
+inner join feeds on feeds.id = inserted_feed_follow.feeds_id
+inner join users on users.id = inserted_feed_follow.users_id
+;
