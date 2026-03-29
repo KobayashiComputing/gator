@@ -65,6 +65,10 @@ func handlerBrowse(s *state, cmd command, user database.User) error {
 
 // handlerUnfollow - unfollow a given feed for the current user
 func handlerUnfollow(s *state, cmd command, user database.User) error {
+	if len(cmd.args) < 1 {
+		return errors.New("Usage: gator unfollow <url>")
+	}
+
 	if len(cmd.args) > 1 {
 		return errors.New("Gator: (unfollow command) error - extraneous input found on command line '" + cmd.args[0] + "'...")
 	}
@@ -115,6 +119,10 @@ func handlerFollowing(s *state, cmd command, user database.User) error {
 
 // handlerFollow - create a new feed_follow record for the given URL and current user
 func handlerFollow(s *state, cmd command, user database.User) error {
+	if len(cmd.args) < 1 {
+		return errors.New("Usage: gator follow <url>")
+	}
+
 	if len(cmd.args) > 1 {
 		return errors.New("Gator: (follow command) error - extraneous input found on command line '" + cmd.args[0] + "'...")
 	}
